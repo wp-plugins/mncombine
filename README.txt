@@ -3,7 +3,7 @@ Contributors: mneil
 Donate link: http://mneilsworld.com/donate
 Tags: css, javascript, js, cascade, style, sheet, combine, compress, uglify, minify, closure, admin, aggregate, cache 
 Requires at least: 3.3.1
-Tested up to: 3.3.1
+Tested up to: 3.5.1
 Stable tag: 1.0.3
 
 Easily manage the merging and compression of js and css files from plugins and themes
