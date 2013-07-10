@@ -3,8 +3,8 @@ Contributors: mneil
 Donate link: http://mneilsworld.com/donate
 Tags: css, javascript, js, cascade, style, sheet, combine, compress, uglify, minify, closure, admin, aggregate, cache 
 Requires at least: 3.3.1
-Tested up to: 3.5.1
-Stable tag: 1.0.3
+Tested up to: 3.5.2
+Stable tag: 1.1.0
 
 Easily manage the merging and compression of js and css files from plugins and themes
 
@@ -48,6 +48,13 @@ conjunction with development mode.
 time is saved when comparing the browser cached results of the two requests.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added ability to not combine css files based on REQUEST_URI
+* Added ability to not combine js files based on REQUEST_URI
+
+= 1.0.4 =
+* Fixed bug where plugin combined all css if no css files were selected
 
 = 1.0.3 =
 * Option to compress css or not

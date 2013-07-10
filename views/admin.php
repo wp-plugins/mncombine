@@ -45,6 +45,8 @@
   $compile_mode = get_option( 'mn_compile_mode', $this->compile_mode );
   $force_combine = get_option( 'mn_force_combine', $this->force_combine );
   $css_compression = get_option( 'mn_css_compression', $this->css_compression );
+  $exclude_css_regex = get_option( 'mn_exclude_css_regex', $this->exclude_css_regex );
+  $exclude_js_regex = get_option( 'mn_exclude_js_regex', $this->exclude_js_regex );
   //$compress_js_single = get_option( 'mn_compress_js_single', $this->compress_js_single );
   $id = 0;
   ?>
@@ -168,6 +170,37 @@
                 In the footer <a href="#" class="read-help">learn more</a>
               </label>
               <br/>
+              
+            </fieldset>
+          </td>
+        </tr>
+        <tr valign="top">
+          <th scope="row">Don't combine css on regex</th>
+          <td>
+            <fieldset>
+              <legend class="screen-reader-text">
+                <span>Don't combine css files on specific pages</span>
+              </legend>
+              <input name="exclude_css_regex" type="text" id="exclude_css_regex" value="<?php echo $exclude_css_regex; ?>" class="regular-text" placeholder="/\/$|\/about$/ : exclude home and about"/>
+              <br />
+              <p class="description">
+                A regex matching REQUEST_URI.
+              </p>
+            </fieldset>
+          </td>
+        </tr>
+        <tr valign="top">
+          <th scope="row">Don't combine js on regex</th>
+          <td>
+            <fieldset>
+              <legend class="screen-reader-text">
+                <span>Don't combine js files on specific pages</span>
+              </legend>
+              <input name="exclude_js_regex" type="text" id="exclude_js_regex" value="<?php echo $exclude_js_regex; ?>" class="regular-text" placeholder="/\/$|\/about$/ : exclude home and about"/>
+              <br />
+              <p class="description">
+                A regex matching REQUEST_URI.
+              </p>
               
             </fieldset>
           </td>

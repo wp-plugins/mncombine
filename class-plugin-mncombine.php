@@ -24,7 +24,7 @@ class MnCombine {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.0.3';
+	protected $version = '1.1.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -141,6 +141,20 @@ class MnCombine {
    * @since 1.0.3
    */
   protected $compress_js_single = '0';
+  
+  /**
+   * A regex to match REQUEST_URI to exclude combining css on
+   * 
+   * @since 1.1.0
+   */
+  protected $exclude_css_regex = "";
+  
+  /**
+   * A regex to match REQUEST_URI to exclude combining js on
+   * 
+   * @since 1.1.0
+   */
+  protected $exclude_js_regex = "";
   
   /**
    * Stores the default parsing structure for stored data
@@ -451,6 +465,8 @@ class MnCombine {
       update_option( 'mn_compile_mode', $_POST['compile_mode'] );
       update_option( 'mn_force_combine', $_POST['force_combine'] );
       update_option( 'mn_css_compression', $_POST['css_compression'] );
+      update_option( 'mn_exclude_css_regex', stripslashes($_POST['exclude_css_regex']) );
+      update_option( 'mn_exclude_js_regex', stripslashes($_POST['exclude_js_regex']) );
       //update_option( 'mn_compress_js_single', $_POST['mn_compress_js_single'] );
     }
     elseif( "js" === $_GET['action'] )
@@ -487,7 +503,7 @@ class MnCombine {
     $filter = new DirnameFilter($filter, '/^(?!\.\.)/');
     // Filter css/js files . although in this case these should be all that exist
     $filter = new FilenameFilter($filter, '/\.(?:css|js)$/');
-    $c = array();
+    $cache = array();
         
     foreach(new RecursiveIteratorIterator($filter) as $file)
     {
@@ -513,7 +529,7 @@ class MnCombine {
   {
     $directory = new RecursiveDirectoryIterator(WP_PLUGIN_DIR);
     // Filter out ". and .. and this plugin" folders
-    $filter = new DirnameFilter($directory, '/^(?!'.dirname( plugin_basename( __FILE__ ) ).')/');
+    $filter = new DirnameFilter($directory, '/^(?!'.str_replace( "/", "\/", dirname( plugin_basename( __FILE__ ) ) ).')/');
     //get plugins list
     $plugins = get_plugins();
     //loop the plugins and check for inactive ones to exclude
@@ -551,7 +567,7 @@ class MnCombine {
     //recurse the active theme
     $directory = new RecursiveDirectoryIterator(get_stylesheet_directory());
     // Filter out ". and .. and this plugin" folders
-    $filter = new DirnameFilter($directory, '/^(?!'.dirname( plugin_basename( __FILE__ ) ).')/');
+    $filter = new DirnameFilter($directory, '/^(?!'.str_replace( "/", "\/", dirname( plugin_basename( __FILE__ ) ) ).')/');
     $filter = new DirnameFilter($filter, '/^(?!\.)/');
     $filter = new DirnameFilter($filter, '/^(?!\.\.)/');
     // Filter css/js files 
@@ -599,9 +615,12 @@ class MnCombine {
    */
   public function wp_print_scripts()
   {
+    $regex = get_option( 'mn_exclude_js_regex', $this->exclude_js_regex );
+    if( $regex !== "" && preg_match($regex, $_SERVER["REQUEST_URI"]) ) return;
+    
     do_action('mn_print_scripts');
     global $wp_scripts, $auto_compress_scripts;
-     
+         
     $header = array();
     $footer = array();
     $localize = array();//store the localize scripts data
@@ -611,7 +630,7 @@ class MnCombine {
     $mtimes = array('header' => array(), 'footer' => array());
   
     $url = get_bloginfo("wpurl");//we need the blogs url to assist in comparisons later
-    
+
     //if nothing is registered then stop this madness
     if( count( $wp_scripts->registered ) === 0 || count( $assets['combine']['js'] ) === 0 )
       return false;
@@ -930,31 +949,54 @@ class MnCombine {
    * @since 1.0.0
    */
   function wp_print_styles()
-  {    
+  {
+    $regex = get_option( 'mn_exclude_css_regex', $this->exclude_css_regex );
+    if( $regex !== "" && preg_match($regex, $_SERVER["REQUEST_URI"]) ) return;    
+    
     global $wp_styles;
     
     $compile_mode = get_option( 'mn_compile_mode', $this->compile_mode );
+    $assets = get_option( 'mn_comine_assets', $this->default );//get the list of files we can compress/combine      
     $mtimes = array();
     
-    /* Make sure we have something to do here */
-    if( count( $wp_styles->registered ) == 0 )
-      return false;
+    $url = get_bloginfo("wpurl");//we need the blogs url to assist in comparisons later
     
+    /* Make sure we have something to do here */
+    if( count( $wp_styles->registered ) == 0 || count( $assets['combine']['css'] ) === 0 )
+      return false;
+
     /* Let's get down to the styles we need for the page */
     $queue = $wp_styles->queue;
     $wp_styles->all_deps($queue);
     $to_do = $wp_styles->to_do;
     
     $styles = array();
-    
     foreach ($to_do as $key => $handle) 
     {
-      $src = $wp_styles->registered[$handle]->src;
+      $src = $use = $wp_styles->registered[$handle]->src;
       /* This is an external script. We may not be able to grab it. Let's not deal with it */
       if( preg_match( "*(http://)(?!".$_SERVER["SERVER_NAME"].")*", $src ) )
         continue;
       
       $styles[$handle] = (object)array( 'src' => $src );
+      //check if the source has the full wp site url in it and remove it if it doest
+      if( strstr($use, $url) )
+        $use = str_replace( $url, "", $use );
+      
+      //store whether or not this file matches a file to combine
+      $match = false;
+      //loop the files list to combine
+      foreach($assets['combine']['css'] as $css )
+        //if the file is in the list
+        if( strstr( $css, $use ) )
+        {
+          //we have a match, we'll continue below
+          $match = true;
+          break;
+        }
+      //file isn't in the combine list
+      if( !$match )
+        continue;    
       
       if( "development" === $compile_mode )
       {
