@@ -4,7 +4,7 @@ Donate link: http://mneilsworld.com/donate
 Tags: css, javascript, js, cascade, style, sheet, combine, compress, uglify, minify, closure, admin, aggregate, cache 
 Requires at least: 3.3.1
 Tested up to: 3.5.2
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 
 Easily manage the merging and compression of js and css files from plugins and themes
 
@@ -39,6 +39,12 @@ inclusion. This results in a bit of latency when caching your files. However, in
 do not have to be regenerated again and load times are improved significantly. Using JSMin is much faster and recommended for use in 
 conjunction with development mode.
 
+= Can I exclude certain pages from using the plugin =
+
+As of version 1.1.0 you can exclude pages from compiling/compressing css or js files using a regular expression in the general 
+settings tab.
+
+
 == Screenshots ==
 
 1. Choose the compression settings and mode
@@ -48,6 +54,9 @@ conjunction with development mode.
 time is saved when comparing the browser cached results of the two requests.
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixed Fatal Error on "Cache" admin page before cache folder had been generated
 
 = 1.1.0 =
 * Added ability to not combine css files based on REQUEST_URI

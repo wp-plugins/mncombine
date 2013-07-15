@@ -497,6 +497,9 @@ class MnCombine {
    */
   private function find_cache()
   {
+    if( !is_dir($this->uploads['basedir'] . '/' . $this->upload_dir) )
+      return;
+    
     $directory = new RecursiveDirectoryIterator( $this->uploads['basedir'] . '/' . $this->upload_dir );
     
     $filter = new DirnameFilter($directory, '/^(?!\.)/');
