@@ -24,7 +24,7 @@ class MnCombine {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.1.0';
+	protected $version = '1.1.1';
 
 	/**
 	 * Unique identifier for your plugin.
