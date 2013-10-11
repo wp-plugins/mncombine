@@ -24,7 +24,7 @@ class MnCombine {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.1.1';
+	protected $version = '1.1.2';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -635,7 +635,7 @@ class MnCombine {
     $url = get_bloginfo("wpurl");//we need the blogs url to assist in comparisons later
 
     //if nothing is registered then stop this madness
-    if( count( $wp_scripts->registered ) === 0 || count( $assets['combine']['js'] ) === 0 )
+    if( !is_object($wp_scripts) || count( $wp_scripts->registered ) === 0 || count( $assets['combine']['js'] ) === 0 )
       return false;
     
     $queue = $wp_scripts->queue;
@@ -923,8 +923,8 @@ class MnCombine {
     }
     
     $this->handle = 'mn_cache_' . uniqid();
-    $path = $this->uploads['baseurl'] . '/' . $this->upload_dir . '/' . $file . ".js";
-    
+    $path = preg_replace("|https?:|","",$this->uploads['baseurl']) . '/' . $this->upload_dir . '/' . $file . ".js";
+
     wp_enqueue_script( $this->handle, $path, null, 0, $footer );
     /**
      * If we're unqueueing the header scripts then we need to 
@@ -1089,7 +1089,7 @@ class MnCombine {
     $handle = 'mn_cache_' . uniqid();
     $path = $this->uploads['baseurl'] . '/' . $this->upload_dir . '/' . $file . ".css";
     
-    wp_enqueue_style( $handle, $path, null, 0);
+    wp_enqueue_style( $handle, preg_replace("|https?:|","",$path), null, 0);
     
     global $wp_styles;
     if ( ! is_a( $wp_styles, 'WP_Styles' ) )
