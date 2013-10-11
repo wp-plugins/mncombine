@@ -6,15 +6,15 @@
  * WordPress coding standards and PHP best practices.
  *
  * @package MnCombine
- * @author  Your Name <email@example.com>
+ * @author  Michael Neil <mneil@mneilsworld.com>
  * @license GPL-2.0+
- * @link    http://mneilsworld.com/mncombine
- *
- * @wordpress-plugin
+ * @link    http://mneilsworld.com/php-2/mncombine-wp-plugin-release
+ */
+/*
  * Plugin Name: MnCombine
- * Plugin URI: http://mneilsworld.com/mncombine
+ * Plugin URI: http://mneilsworld.com/php-2/mncombine-wp-plugin-release
  * Description: Easily manage the merging and compression of js and css files from plugins and themes
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: Michael Neil
  * Author URI: http://mneilsworld.com/
  * Author Email: mneil@mneilsworld.com
