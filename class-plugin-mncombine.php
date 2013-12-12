@@ -24,7 +24,7 @@ class MnCombine {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.1.2';
+	protected $version = '1.1.3';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -320,8 +320,8 @@ class MnCombine {
 	 */
 	public function add_plugin_admin_menu() {
 		$this->plugin_screen_hook_suffix = add_plugins_page(
-			__('Mn Combine', 'MnCombine'),
-			__('Asset Combine', 'MnCombine'),
+			__('Mn Combine', 'mn-combine'),
+			__('Asset Combine', 'mn-combine'),
 			'read',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' )
@@ -343,42 +343,42 @@ class MnCombine {
     // Add my_help_tab if current screen is My Admin Page
     $screen->add_help_tab( array(
         'id'  => 'mn_combine_description',
-        'title' => __('Description'),
+        'title' => __('Description', 'mn-combine'),
         'content' => '<p>' . __( 'Finds all possible .js and .css files from a WP install available and allows 
         you to combine and/or compress the files to reduce load time. The plugin can monitor file changes in 
         "development" mode (by hashing file mtime) which allows the plugin to recompile the files when a 
         file changes. Or, it can cache the files in "production" mode so that files are only recompiled 
         if they are not found or are deleted manually from the cache folder. Additionally, this plugin will 
-        allow you to force the inclusion of javascript files into either the head or the foot of the page.' ) . '</p>' . '<p>' . 
+        allow you to force the inclusion of javascript files into either the head or the foot of the page.', 'mn-combine' ) . '</p>' . '<p>' . 
         __( 'There are two modes, development and production, the ability to force the files to print in the header or footer*, 
         the use of Google Closure as a JS compiler, and finally the ability to pick and choose which files, 
-        including dependencies, should be combined.' ) . '</p>'. '<p>' . 
+        including dependencies, should be combined.', 'mn-combine' ) . '</p>'. '<p>' . 
         __( '*forcing head compiles can fail on JS files queued after the call to wp_head(). The plugin will, 
-        in this case, render the late queued files in the footer as originally intended.' ) . '</p>',
+        in this case, render the late queued files in the footer as originally intended.', 'mn-combine' ) . '</p>',
     ) );
     $screen->add_help_tab( array(
       'id'  => 'mn_combine_general',
-      'title' => __('General Settings'),
-      'content' => '<p>' . '<strong>' . __('Javascript Compression Engine ') . '</strong>' . __( ': determine
-        the compression engine to use when compressing javascript files' ) . '</p>' . '<p>'
-         . '<strong>' . __('Compress CSS ') . '</strong>' . 
+      'title' => __('General Settings', 'mn-combine'),
+      'content' => '<p>' . '<strong>' . __('Javascript Compression Engine ', 'mn-combine') . '</strong>' . __( ': determine
+        the compression engine to use when compressing javascript files' , 'mn-combine') . '</p>' . '<p>'
+         . '<strong>' . __('Compress CSS ', 'mn-combine') . '</strong>' . 
          __( ' :  determines whether or not to compress the compiled css. This is done using a regex which, in 
          most cases, does a great job compressing css by removing whitespaces and newlines. This can, however, cause
-         errors in some css. If it does, please contact us and let us know what css caused the error.') . '</p>'
-         . '<strong>' . __('Mode ') . '</strong>' . 
+         errors in some css. If it does, please contact us and let us know what css caused the error.', 'mn-combine') . '</p>'
+         . '<strong>' . __('Mode ', 'mn-combine') . '</strong>' . 
         __( ' : Prodution mode will only
         compile the files neccessary for a page on the first request and cache those files.
         All subsequent requests will serve those cache files until either a new dependency
         is queued or the cache file is removed. Development mode will monitor the files
         last change time and recompile the assets on any page request where the files data
-        has been modified.' ) . '<em><strong>' . __(' NOTE: ') . '</strong>' . __(' development mode will not monitor changes
-        made to css files that are included by an @import statement ') . '</em></p>'
-         . '<strong>' . __('Force combine ') . '</strong>' .
+        has been modified.' ) . '<em><strong>' . __(' NOTE: ', 'mn-combine') . '</strong>' . __(' development mode will not monitor changes
+        made to css files that are included by an @import statement ', 'mn-combine') . '</em></p>'
+         . '<strong>' . __('Force combine ', 'mn-combine') . '</strong>' .
         __( ' : footer will force all javascript to load in the footer while header
         will force all queued javascript to be loaded in the footer. Forcing files queued for the header into the footer
         can cause some scripts to fail or dependencies to be missed if javascript is written inline in. 
         Forcing scripts into the header can cause scripts queued late to still remain in the footer.
-        Use this to get the best load times possible but beware that it can break your site when enabled and probably isn\'t necessary.' ) . '</p>',
+        Use this to get the best load times possible but beware that it can break your site when enabled and probably isn\'t necessary.' , 'mn-combine') . '</p>',
     ) );
   }
   /**
@@ -397,7 +397,7 @@ class MnCombine {
       return;
     
     $args = array(
-      'label' => __('Members per page', 'MnCombine'),
+      'label' => __('Members per page', 'mn-combine'),
       'default' => 10,
       'option' => 'some_option'
     );

@@ -16,10 +16,10 @@
 
 	<?php screen_icon(); ?>
 	<h2 class="nav-tab-wrapper">
-    <a href="<?php echo admin_url(get_admin_page_parent() . "?page=$this->plugin_slug"); ?>" class="nav-tab <?php if( !isset($_GET['action'] ) ) echo 'nav-tab-active'; ?>">General Settings</a>
-    <a href="<?php echo admin_url(get_admin_page_parent() . "?page=$this->plugin_slug&action=cache"); ?>" class="nav-tab <?php if( isset($_GET['action'] ) && 'cache' === $_GET['action'] ) echo 'nav-tab-active'; ?>">Cache</a>
-    <a href="<?php echo admin_url(get_admin_page_parent() . "?page=$this->plugin_slug&action=js"); ?>" class="nav-tab <?php if( isset($_GET['action'] ) && 'js' === $_GET['action'] ) echo 'nav-tab-active'; ?>">Javascript</a>
-    <a href="<?php echo admin_url(get_admin_page_parent() . "?page=$this->plugin_slug&action=css"); ?>" class="nav-tab <?php if( isset($_GET['action'] ) && 'css' === $_GET['action'] ) echo 'nav-tab-active'; ?>">CSS</a>
+    <a href="<?php echo admin_url(get_admin_page_parent() . "?page=$this->plugin_slug"); ?>" class="nav-tab <?php if( !isset($_GET['action'] ) ) echo 'nav-tab-active'; ?>"><?php echo _e('General Settings', 'mn-combine'); ?></a>
+    <a href="<?php echo admin_url(get_admin_page_parent() . "?page=$this->plugin_slug&action=cache"); ?>" class="nav-tab <?php if( isset($_GET['action'] ) && 'cache' === $_GET['action'] ) echo 'nav-tab-active'; ?>"><?php echo _e('Cache', 'mn-combine'); ?></a>
+    <a href="<?php echo admin_url(get_admin_page_parent() . "?page=$this->plugin_slug&action=js"); ?>" class="nav-tab <?php if( isset($_GET['action'] ) && 'js' === $_GET['action'] ) echo 'nav-tab-active'; ?>"><?php echo _e('Javascript', 'mn-combine'); ?></a>
+    <a href="<?php echo admin_url(get_admin_page_parent() . "?page=$this->plugin_slug&action=css"); ?>" class="nav-tab <?php if( isset($_GET['action'] ) && 'css' === $_GET['action'] ) echo 'nav-tab-active'; ?>"><?php echo _e('CSS', 'mn-combine'); ?></a>
   </h2>
 	
   <?php 
@@ -30,7 +30,7 @@
         <?php if( is_array($errors) && !empty($errors) )
         foreach( $errors as $error ): ?>
         <p>
-          <?php echo $error; ?>
+          <?php echo _e( $error, 'mn-combine'); ?>
         </p>
         <?php endforeach; ?>
       </div>
@@ -58,25 +58,25 @@
     <table class="form-table">
       <tbody>
         <tr valign="top">
-          <th scope="row">Javascript Compression Engine</th>
+          <th scope="row"><?php echo _e('Javascript Compression Engine', 'mn-combine'); ?></th>
           <td>
             <fieldset>
               <legend class="screen-reader-text">
-                <span>choose which javascript engine to use when compressing</span>
+                <span><?php echo _e('choose which javascript engine to use when compressing', 'mn-combine'); ?></span>
               </legend>
               <label for="none">
                 <input name="compression_engine" type="radio" id="none" value="none" <?php if( $compression == "none" )echo 'checked="checked"'; ?>/>
-                No Compression
+                <?php echo _e('No Compression', 'mn-combine'); ?>
               </label>
               <br/>
               <label for="closure">
                 <input name="compression_engine" type="radio" id="closure" value="google_closure" <?php if( $compression == "google_closure" )echo 'checked="checked"'; ?>/>
-                Google Closure <a href="https://developers.google.com/closure/compiler/" target="_blank">learn more</a>
+                <?php echo _e('Google Closure', 'mn-combine'); ?> <a href="https://developers.google.com/closure/compiler/" target="_blank"><?php echo _e('learn more', 'mn-combine'); ?></a>
               </label>
               <br/>
               <label for="jsmin">
                 <input name="compression_engine" type="radio" id="jsmin" value="js_min" <?php if( $compression == "js_min" )echo 'checked="checked"'; ?>/>
-                JSMin <small>Not recommended but it still works</small> <a href="https://github.com/rgrove/jsmin-php/" target="_blank">learn more</a>
+                <?php echo _e('JSMin', 'mn-combine'); ?> <small><?php echo _e('Not recommended but it still works', 'mn-combine'); ?></small> <a href="https://github.com/rgrove/jsmin-php/" target="_blank"><?php echo _e('learn more', 'mn-combine'); ?></a>
               </label>
               <br/>
               
@@ -107,20 +107,20 @@
         </tr>
         <?php */ ?>
         <tr valign="top">
-          <th scope="row">Compress CSS</th>
+          <th scope="row"><?php echo _e('Compress CSS', 'mn-combine'); ?></th>
           <td>
             <fieldset>
               <legend class="screen-reader-text">
-                <span>choose whether or not to compress the css</span>
+                <span><?php echo _e('choose whether or not to compress the css', 'mn-combine'); ?></span>
               </legend>
               <label for="css_compress_0">
                 <input name="css_compression" type="radio" id="css_compress_0" value="0" <?php if( $css_compression == "0" )echo 'checked="checked"'; ?>/>
-                No
+                <?php echo _e('No', 'mn-combine'); ?>
               </label>
               <br/>
               <label for="css_compress_1">
                 <input name="css_compression" type="radio" id="css_compress_1" value="1" <?php if( $css_compression == "1" )echo 'checked="checked"'; ?>/>
-                Yes
+                <?php echo _e('Yes', 'mn-combine'); ?>
               </label>
               <br/>
               
@@ -128,20 +128,20 @@
           </td>
         </tr>
         <tr valign="top">
-          <th scope="row">Mode</th>
+          <th scope="row"><?php echo _e('Mode', 'mn-combine'); ?></th>
           <td>
             <fieldset>
               <legend class="screen-reader-text">
-                <span>Choose a mode to determine when to compress</span>
+                <span><?php echo _e('Choose a mode to determine when to compress', 'mn-combine'); ?></span>
               </legend>
               <label for="none">
                 <input name="compile_mode" type="radio" id="none" value="development" <?php if( $compile_mode == "development" )echo 'checked="checked"'; ?>/>
-                Development
+                <?php echo _e('Development', 'mn-combine'); ?>
               </label>
               <br/>
               <label for="closure">
                 <input name="compile_mode" type="radio" id="closure" value="production" <?php if( $compile_mode == "production" )echo 'checked="checked"'; ?>/>
-                Production
+                <?php echo _e('Production', 'mn-combine'); ?>
               </label>
               <br/>
               
@@ -149,25 +149,25 @@
           </td>
         </tr>
         <tr valign="top">
-          <th scope="row">Force Combine</th>
+          <th scope="row"><?php echo _e('Force Combine', 'mn-combine'); ?></th>
           <td>
             <fieldset>
               <legend class="screen-reader-text">
-                <span>Force scripts queued to load in the header or footer only</span>
+                <span><?php echo _e('Force scripts queued to load in the header or footer only', 'mn-combine'); ?></span>
               </legend>
               <label for="none">
                 <input name="force_combine" type="radio" id="none" value="none" <?php if( $force_combine == "none" )echo 'checked="checked"'; ?>/>
-                Do not force
+                <?php echo _e('Do not force', 'mn-combine'); ?>
               </label>
               <br/>
               <label for="header">
                 <input name="force_combine" type="radio" id="header" value="header" <?php if( $force_combine == "header" )echo 'checked="checked"'; ?>/>
-                In the header <a href="#" class="read-help">learn more</a>
+                <?php echo _e('In the header', 'mn-combine'); ?> <a href="#" class="read-help"><?php echo _e('learn more', 'mn-combine'); ?></a>
               </label>
               <br/>
               <label for="footer">
                 <input name="force_combine" type="radio" id="footer" value="footer" <?php if( $force_combine == "footer" )echo 'checked="checked"'; ?>/>
-                In the footer <a href="#" class="read-help">learn more</a>
+                <?php echo _e('In the footer', 'mn-combine'); ?> <a href="#" class="read-help"><?php echo _e('learn more', 'mn-combine'); ?></a>
               </label>
               <br/>
               
@@ -175,31 +175,31 @@
           </td>
         </tr>
         <tr valign="top">
-          <th scope="row">Don't combine css on regex</th>
+          <th scope="row"><?php echo _e('Don\'t combine css on regex', 'mn-combine'); ?></th>
           <td>
             <fieldset>
               <legend class="screen-reader-text">
-                <span>Don't combine css files on specific pages</span>
+                <span><?php echo _e('Don\'t combine css files on specific pages', 'mn-combine'); ?></span>
               </legend>
-              <input name="exclude_css_regex" type="text" id="exclude_css_regex" value="<?php echo $exclude_css_regex; ?>" class="regular-text" placeholder="/\/$|\/about$/ : exclude home and about"/>
+              <input name="exclude_css_regex" type="text" id="exclude_css_regex" value="<?php echo $exclude_css_regex; ?>" class="regular-text" placeholder="<?php echo _e('/\/$|\/about$/ : exclude home and about', 'mn-combine'); ?>"/>
               <br />
               <p class="description">
-                A regex matching REQUEST_URI.
+                <?php echo _e('A regex matching REQUEST_URI.', 'mn-combine'); ?>
               </p>
             </fieldset>
           </td>
         </tr>
         <tr valign="top">
-          <th scope="row">Don't combine js on regex</th>
+          <th scope="row"><?php echo _e('Don\'t combine js on regex', 'mn-combine'); ?></th>
           <td>
             <fieldset>
               <legend class="screen-reader-text">
-                <span>Don't combine js files on specific pages</span>
+                <span><?php echo _e('Don\'t combine js files on specific pages', 'mn-combine'); ?></span>
               </legend>
-              <input name="exclude_js_regex" type="text" id="exclude_js_regex" value="<?php echo $exclude_js_regex; ?>" class="regular-text" placeholder="/\/$|\/about$/ : exclude home and about"/>
+              <input name="exclude_js_regex" type="text" id="exclude_js_regex" value="<?php echo $exclude_js_regex; ?>" class="regular-text" placeholder="<?php echo _e('/\/$|\/about$/ : exclude home and about', 'mn-combine'); ?>"/>
               <br />
               <p class="description">
-                A regex matching REQUEST_URI.
+                <?php echo _e('A regex matching REQUEST_URI.', 'mn-combine'); ?>
               </p>
               
             </fieldset>
@@ -209,7 +209,7 @@
     </table>
     
     
-    <p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"></p>
+    <p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php echo _e('Save Changes'); ?>"></p>
   </form>
 
 </div>
