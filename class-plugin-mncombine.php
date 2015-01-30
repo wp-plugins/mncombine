@@ -24,7 +24,7 @@ class MnCombine {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.1.3';
+	protected $version = '1.1.5';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -658,14 +658,15 @@ class MnCombine {
       //store whether or not this file matches a file to combine
       $match = false;
       //loop the files list to combine
-      foreach($assets['combine']['js'] as $js )
-        //if the file is in the list
-        if( strstr( $js, $use ) )
-        {
-          //we have a match, we'll continue below
-          $match = true;
-          break;
-        }
+      if( $use )
+        foreach($assets['combine']['js'] as $js )
+          //if the file is in the list
+          if( @strstr( $js, $use ) )
+          {
+            //we have a match, we'll continue below
+            $match = true;
+            break;
+          }
       //file isn't in the combine list
       if( !$match )
         continue;    

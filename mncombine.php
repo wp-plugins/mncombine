@@ -14,7 +14,7 @@
  * Plugin Name: MnCombine
  * Plugin URI: http://mneilsworld.com/php-2/mncombine-wp-plugin-release
  * Description: Easily manage the merging and compression of js and css files from plugins and themes
- * Version: 1.1.3
+ * Version: 1.1.5
  * Author: Michael Neil
  * Author URI: http://mneilsworld.com/
  * Author Email: mneil@mneilsworld.com
